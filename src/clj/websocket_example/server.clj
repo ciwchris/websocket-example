@@ -1,7 +1,7 @@
 (ns websocket-example.server
   (:require [websocket-example.handler :refer [app]]
             [environ.core :refer [env]]
-            [ring.adapter.jetty :refer [run-jetty]])
+            [org.httpkit.server :refer [run-server]])
   (:gen-class))
 
  (defn -main [& args]

@@ -2,7 +2,6 @@
   (:use websocket-example.handler
         websocket-example.dev
         org.httpkit.server ;; -->Added
-        ring.server.standalone
         [ring.middleware file-info file]))
 
 (defonce server (atom nil))
