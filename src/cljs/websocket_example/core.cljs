@@ -5,19 +5,17 @@
 ;; -------------------------
 ;; Views
 
-(defn welcome-message [message]
-  [:div @message])
 
 (defn home-page []
   [:div [:h2 "Websocket Example"]
-   (if (not (nil? @message)) [welcome-message message])])
+   (if (not (nil? @message)) [:div @message])])
 
 
 ;; -------------------------
 ;; Initialize app
 (defn mount-root []
   (reagent/render [home-page] (.getElementById js/document "app"))
-  (let [ws (js/WebSocket. "ws://localhost:3449/test")]
+  (let [ws (js/WebSocket. "ws://localhost:3449/message")]
     (aset ws "onmessage" (fn [m] (swap! message (fn [] (aget m "data"))))))
   )
 

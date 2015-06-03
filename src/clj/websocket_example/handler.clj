@@ -1,12 +1,12 @@
 (ns websocket-example.handler
-  (:use org.httpkit.server) ;; -->Added
   (:require [compojure.core :refer [GET defroutes]]
             [compojure.route :refer [not-found resources]]
             [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
             [hiccup.core :refer [html]]
             [hiccup.page :refer [include-js include-css]]
             [prone.middleware :refer [wrap-exceptions]]
-            [environ.core :refer [env]]))
+            [environ.core :refer [env]]
+            [org.httpkit.server :refer [with-channel on-close send!]])) ;; -->Added
 
 (def home-page
   (html
@@ -39,7 +39,7 @@
 
 (defroutes routes
   (GET "/" [] home-page)
-  (GET "/test" [] ws) ;; -->Added
+  (GET "/message" [] ws) ;; -->Added
   (resources "/")
   (not-found "Not Found"))
 
