@@ -49,46 +49,46 @@
                                         :optimizations :none
                                         :pretty-print  true}}}}
 
-  :profiles {:dev {:repl-options {:init-ns websocket-example.repl
-                                  :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
+  :profiles {:dev [:project/dev :local/dev]
+             :project/dev {:repl-options {:init-ns websocket-example.repl
+                                     :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
 
-                   :dependencies [[ring-mock "0.1.5"]
-                                  [ring/ring-devel "1.3.2"]
-                                  [weasel "0.6.0"]
-                                  [leiningen-core "2.5.1"]
-                                  [lein-figwheel "0.3.3"]
-                                  [com.cemerick/piggieback "0.2.1"]
-                                  [org.clojure/tools.nrepl "0.2.10"]
-                                  [pjstadig/humane-test-output "0.7.0"]]
+                      :dependencies [[ring-mock "0.1.5"]
+                                     [ring/ring-devel "1.3.2"]
+                                     [weasel "0.6.0"]
+                                     [leiningen-core "2.5.1"]
+                                     [lein-figwheel "0.3.3"]
+                                     [com.cemerick/piggieback "0.2.1"]
+                                     [org.clojure/tools.nrepl "0.2.10"]
+                                     [pjstadig/humane-test-output "0.7.0"]]
 
-                   :source-paths ["env/dev/clj"]
-                   :plugins [[lein-figwheel "0.3.3"]
-                             [lein-cljsbuild "1.0.6"]]
+                      :source-paths ["env/dev/clj"]
+                      :plugins [[lein-figwheel "0.3.3"]
+                                [lein-cljsbuild "1.0.6"]]
 
-                   :injections [(require 'pjstadig.humane-test-output)
-                                (pjstadig.humane-test-output/activate!)]
+                      :injections [(require 'pjstadig.humane-test-output)
+                                   (pjstadig.humane-test-output/activate!)]
 
-                   :figwheel {:http-server-root "public"
-                              :nrepl-port 7888  ;; -->Added
-                              :server-port 3449
-                              :css-dirs ["resources/public/css"]
-                              :ring-handler websocket-example.handler/app}
+                      :figwheel {:http-server-root "public"
+                                 :nrepl-port 7888 ;; -->Added
+                                 :server-port 3449
+                                 :css-dirs ["resources/public/css"]
+                                 :ring-handler websocket-example.handler/app}
 
-                   :env {:dev true}
+                      :env {:dev true}
 
-                   :cljsbuild {:builds {:app {:source-paths ["env/dev/cljs"]
-                                              :compiler {:main "websocket-example.dev"
-                                                         :source-map true}}
-}
-}}
+                      :cljsbuild {:builds {:app {:source-paths ["env/dev/cljs"]
+                                                 :compiler {:main "websocket-example.dev"
+                                                            :source-map true}}}}}
 
-             :uberjar {:hooks [leiningen.cljsbuild minify-assets.plugin/hooks]
-                       :env {:production true}
-                       :aot :all
-                       :omit-source true
-                       :cljsbuild {:jar true
-                                   :builds {:app
-                                             {:source-paths ["env/prod/cljs"]
-                                              :compiler
-                                              {:optimizations :advanced
-                                               :pretty-print false}}}}}})
+             :uberjar [:project/prod :local/prod]
+                :project/prod {:hooks [leiningen.cljsbuild minify-assets.plugin/hooks]
+                          :env {:production true}
+                          :aot :all
+                          :omit-source true
+                          :cljsbuild {:jar true
+                                      :builds {:app
+                                               {:source-paths ["env/prod/cljs"]
+                                                :compiler
+                                                {:optimizations :advanced
+                                                 :pretty-print false}}}}}})

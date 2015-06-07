@@ -4,6 +4,7 @@
             [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
             [hiccup.core :refer [html]]
             [hiccup.page :refer [include-js include-css]]
+            [hiccup.element :refer [javascript-tag]]
             [prone.middleware :refer [wrap-exceptions]]
             [environ.core :refer [env]]
             [org.httpkit.server :refer [with-channel on-close send!]])) ;; -->Added
@@ -15,7 +16,8 @@
      [:meta {:charset "utf-8"}]
      [:meta {:name "viewport"
              :content "width=device-width, initial-scale=1"}]
-     (include-css (if (env :dev) "css/site.css" "css/site.min.css"))]
+     (include-css (if (env :dev) "css/site.css" "css/site.min.css"))
+     (javascript-tag (str "var websocketUrl = '" (env :websocket-url) "';"))]
     [:body
      [:div#app]
      (include-js "js/app.js")]]))
