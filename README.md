@@ -104,6 +104,19 @@ Similary, replace jetty with http-kit and use it to start and stop the server:
 ```
 
 ```clj
+(defn start-server
+  "used for starting the server in development mode from REPL"
+  [& [port]]
+  (let [port (if port (Integer/parseInt port) 3449)]
+    (reset! server
+            (run-server (get-handler)
+                   {:port port
+                    :auto-reload? true
+                    :join? false}))
+    (println (str "You can view the site at http://localhost:test:" port))))
+```
+
+```clj
 (defn stop-server []
   (@server)
   (reset! server nil))

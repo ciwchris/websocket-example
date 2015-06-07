@@ -22,7 +22,7 @@
   [& [port]]
   (let [port (if port (Integer/parseInt port) 3449)]
     (reset! server
-            (serve (get-handler)
+            (run-server (get-handler)
                    {:port port
                     :auto-reload? true
                     :join? false}))
